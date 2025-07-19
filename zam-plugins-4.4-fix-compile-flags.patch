@@ -1,0 +1,27 @@
+diff -rupN zam-plugins-4.4.old/dpf/Makefile.base.mk zam-plugins-4.4/dpf/Makefile.base.mk
+--- zam-plugins-4.4.old/dpf/Makefile.base.mk	2025-07-18 21:07:19.874677000 +0200
++++ zam-plugins-4.4/dpf/Makefile.base.mk	2025-07-18 21:12:19.255452421 +0200
+@@ -126,7 +126,7 @@ TARGET_PROCESSOR := $(firstword $(subst
+ 
+ ifneq (,$(filter i%86,$(TARGET_PROCESSOR)))
+ CPU_I386 = true
+-CPU_I386_OR_X86_64 = true
++CPU_I386_OR_X86_64 = false
+ endif
+ ifneq (,$(filter wasm32,$(TARGET_PROCESSOR)))
+ CPU_I386 = true
+@@ -260,9 +260,13 @@ USE_WEB_VIEW ?= false
+ # Set build and link flags
+ 
+ BASE_FLAGS = -Wall -Wextra -pipe -MD -MP
+-BASE_OPTS  = -O3 -ffast-math -fdata-sections -ffunction-sections
++BASE_OPTS  = -O2 -ffast-math -fdata-sections -ffunction-sections
+ LINK_OPTS  = -fdata-sections -ffunction-sections
+ 
++ifeq ($(CPU_I386_OR_X86_64),false)
++BASE_OPTS += -mtune=generic
++endif
++
+ ifeq ($(GCC),true)
+ BASE_FLAGS += -fno-gnu-unique
+ endif
