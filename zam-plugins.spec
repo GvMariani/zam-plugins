@@ -2,7 +2,7 @@
 
 Summary:	A collection of LV2/LADSPA/JACK audio plugins
 Name:	zam-plugins
-Version:	4.4
+Version:	4.5
 Release:	1
 License:	GPLv2+ and ISC
 Group:	Sound
@@ -11,11 +11,9 @@ Url:		https://www.zamaudio.com/
 #Source0:	https://github.com/zamaudio/zam-plugins/archive/%%{name}-%%{version}.tar.gz
 Source0:	%{name}-%{version}.tar.xz
 # This package does not build on all arches with upstream build flags.
-# These are realtime audio plugins, so we need the fastest possible math;
-# flags for x86_64 are set to be compatible with most AMD and Intel CPUs,
-# and to use the best possible SIMD instruction set.
 Patch0:		zam-plugins-4.4-fix-compile-flags.patch
 BuildRequires:	chrpath
+BuildRequires:	make
 BuildRequires:	ladspa-devel
 BuildRequires:	libzita-convolver-devel >= 4.0.3
 BuildRequires:	pkgconfig(alsa)
@@ -92,7 +90,7 @@ This package contains the VST version of plugins.
 
 %package -n %{name}-clap
 Summary:	A collection of LV2/LADSPA/JACK audio plugins - CLAP version
-Group:	Soundc
+Group:	Sound
 
 %description -n %{name}-clap
 A collection of LV2/LADSPA/VST/JACK audio plugins for sound processing
@@ -111,7 +109,7 @@ This package contains the CLAP version of plugins.
 %build
 # No configure: only Makefile
 %set_build_flags
-%make PREFIX=%{_prefix} LIBDIR=%{_lib} USE_SYSTEM_LIBS=1
+%make_build PREFIX=%{_prefix} LIBDIR=%{_lib} USE_SYSTEM_LIBS=1
 
  
 %install
