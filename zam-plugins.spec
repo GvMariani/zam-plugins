@@ -13,6 +13,7 @@ Source0:	%{name}-%{version}.tar.xz
 # This package does not build on all arches with upstream build flags.
 Patch0:		zam-plugins-4.4-fix-compile-flags.patch
 BuildRequires:	chrpath
+BuildRequires:	make
 BuildRequires:	ladspa-devel
 BuildRequires:	libzita-convolver-devel >= 4.0.3
 BuildRequires:	pkgconfig(alsa)
@@ -108,7 +109,7 @@ This package contains the CLAP version of plugins.
 %build
 # No configure: only Makefile
 %set_build_flags
-%make PREFIX=%{_prefix} LIBDIR=%{_lib} USE_SYSTEM_LIBS=1
+%make_build PREFIX=%{_prefix} LIBDIR=%{_lib} USE_SYSTEM_LIBS=1
 
  
 %install
